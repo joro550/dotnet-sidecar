@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SideCar", "SideCar\SideCar.csproj", "{0DE3739B-B2E0-43AD-992D-EC25B54418D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{40C805CF-4327-4701-ACDD-CECD26C5D20E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SideCar.Tests", "SideCar.Tests\SideCar.Tests.csproj", "{50DA0570-3CB0-4187-8A26-80AE1225651F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0DE3739B-B2E0-43AD-992D-EC25B54418D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DE3739B-B2E0-43AD-992D-EC25B54418D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DE3739B-B2E0-43AD-992D-EC25B54418D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DE3739B-B2E0-43AD-992D-EC25B54418D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40C805CF-4327-4701-ACDD-CECD26C5D20E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40C805CF-4327-4701-ACDD-CECD26C5D20E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40C805CF-4327-4701-ACDD-CECD26C5D20E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40C805CF-4327-4701-ACDD-CECD26C5D20E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50DA0570-3CB0-4187-8A26-80AE1225651F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50DA0570-3CB0-4187-8A26-80AE1225651F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50DA0570-3CB0-4187-8A26-80AE1225651F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50DA0570-3CB0-4187-8A26-80AE1225651F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

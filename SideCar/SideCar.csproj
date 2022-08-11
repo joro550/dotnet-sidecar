@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.47.0" />
+        <PackageReference Include="StackExchange.Redis" Version="2.6.48" />
+        <PackageReference Include="YamlDotNet" Version="12.0.0" />
+        
+        <Protobuf Include="Protos\greet.proto" GrpcServices="Both" />
+        <Protobuf Include="Protos\logger.proto" GrpcServices="Both" />
+        <Protobuf Include="Protos\persistence.proto" GrpcServices="Both" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Client\Stores" />
+    </ItemGroup>
+</Project>

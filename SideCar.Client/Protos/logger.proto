@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "SideCar";
+package log;
+
+service Logger {
+  rpc LogInformation (Log) returns (LogReturn);
+}
+
+message Log {
+  string title = 1;
+}
+
+message LogReturn {};
+
+
+

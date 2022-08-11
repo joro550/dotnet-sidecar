@@ -1,0 +1,6 @@
+﻿kind: Persistence
+configuration:
+  type: redis
+  parameters:
+    - name: connectionString
+      value: localhost
