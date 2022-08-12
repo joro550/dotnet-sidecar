@@ -28,4 +28,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SideCar\SideCar.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -3,18 +3,18 @@ using StackExchange.Redis;
 
 namespace SideCar.Server.Services;
 
-public class PersistenceService : Persistence.PersistenceBase
+internal class PersistenceService : Persistence.PersistenceBase
 {
     private readonly IDatabase _db;
-    private ComponentLoader _componentLoader;
     private readonly ConnectionMultiplexer _redis;
+    private readonly IComponentStrategy _componentStrategy;
 
-    public PersistenceService()
+    public PersistenceService(IComponentStrategy componentStrategy)
     {
         _redis = ConnectionMultiplexer.Connect("localhost");
         _db = _redis.GetDatabase();
 
-        _componentLoader = new ComponentLoader();
+        _componentStrategy = componentStrategy;
     }
     
     public override async Task<StoreReply> StoreValue(StoreRequest request, ServerCallContext context)
@@ -32,7 +32,10 @@ public class PersistenceService : Persistence.PersistenceBase
     public override async Task<RetrieveReply> RetrieveValue(RetrieveRequest request, ServerCallContext context)
     {
         var config = await ConfigLoader.LoadFromFile(request.StoreName);
-        var loader = _componentLoader.GetLoader(config.Kind);
+        var loader = await _componentStrategy.ExecuteStrategyForComponent<string>(config, new RetrieveStrategy
+        {
+            Key = request.Key
+        });
         
         
         

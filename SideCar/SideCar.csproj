@@ -16,8 +16,4 @@
         <Protobuf Include="Protos\logger.proto" GrpcServices="Both" />
         <Protobuf Include="Protos\persistence.proto" GrpcServices="Both" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Client\Stores" />
-    </ItemGroup>
 </Project>

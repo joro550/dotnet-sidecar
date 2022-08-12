@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+using SideCar.Server;
 using Xunit.Abstractions;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -16,21 +18,45 @@ public class UnitTest1
     [Fact]
     public void Test1()
     {
-        var parameter = new Parameter("connectionString", "localhost");
-        var persistenceType = new Thing2("redis", new List<Parameter> { parameter });
-        var config = new Config("Persistence", persistenceType);
-        
-        var serializer = new SerializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance)
-            .Build();
-        var yaml = serializer.Serialize(config);
-        
-        var deserializer = new DeserializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance)
-            .Build();
-        var config2 = deserializer.Deserialize<Config>(yaml); 
+        // var parameter = new Parameter("connectionString", "localhost");
+        // var persistenceType = new ComponentConfiguration("redis", new List<Parameter> { parameter });
+        // var config = new Config("Persistence", persistenceType);
+        //
+        // var serializer = new SerializerBuilder()
+        //     .WithNamingConvention(CamelCaseNamingConvention.Instance)
+        //     .Build();
+        // var yaml = serializer.Serialize(config);
+        //
+        // var deserializer = new DeserializerBuilder()
+        //     .WithNamingConvention(CamelCaseNamingConvention.Instance)
+        //     .Build();
+        // var config2 = deserializer.Deserialize<Config>(yaml); 
+        //
+        // _testOutputHelper.WriteLine(yaml);
+    }
 
-        _testOutputHelper.WriteLine(yaml);
+    [Fact]
+    public async Task Test2()
+    {
+        var serviceBuilder = new ServiceCollection();
+        serviceBuilder.AddTransient(typeof(IStrategyExecutor<RetrieveStrategy,string>), typeof(RedisStrategyExecutor));
+
+        var parameter = new Parameter()
+        {
+            Name = "connectionString",
+            Value = "localhost"
+        };
+        
+        var persistenceType = new ComponentConfiguration
+        {
+            Type = "redis", Parameters = new List<Parameter> { parameter }
+        };
+
+        var config = new Config { Kind = "Persistence", Configuration = persistenceType };
+        
+        var strategy = new PersistenceStoreStrategy(serviceBuilder.BuildServiceProvider());
+
+        await strategy.ExecuteStrategy(config, new RetrieveStrategy { Key = "name" });
     }
 }
 
@@ -52,29 +78,6 @@ public static class ConfigLoader
         {
             throw;
         }
-        
-    }
-}
-
-public record Config(string Kind, Thing2 Configuration)
-{
-    public Config() : this(string.Empty, new Thing2())
-    {
-    }
-}
-
-public record Thing2(string Type, List<Parameter> Parameters)
-{
-    public Thing2() : this(String.Empty, new List<Parameter>())
-    {
-        
-    }
-}
-
-public record Parameter(string Name, string Value)
-{
-    public Parameter() : this(string.Empty, string.Empty)
-    {
         
     }
 }

@@ -13,6 +13,13 @@ public static class ServiceCollectionExtension
     public static IServiceCollection AddSideCar(this IServiceCollection collection)
     {
         collection.AddHostedService(_ =>  new SideCarBackgroundService(Constants.PortNumber));
+
+        collection.AddTransient<IComponentStrategy, ComponentStrategy>();
+        collection.AddTransient<ITypeStrategy, PersistenceStoreStrategy>();
+
+        collection.AddTransient(typeof(IStrategyExecutor<RetrieveStrategy,string>), typeof(RedisStrategyExecutor));
+        
+        
         return collection;
     }
 }
