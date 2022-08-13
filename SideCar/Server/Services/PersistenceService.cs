@@ -1,46 +1,34 @@
 ﻿using Grpc.Core;
-using StackExchange.Redis;
+using SideCar.Server.Loaders;
+using SideCar.Server.Strategies;
 
 namespace SideCar.Server.Services;
 
 internal class PersistenceService : Persistence.PersistenceBase
 {
-    private readonly IDatabase _db;
-    private readonly ConnectionMultiplexer _redis;
     private readonly IComponentStrategy _componentStrategy;
 
-    public PersistenceService(IComponentStrategy componentStrategy)
-    {
-        _redis = ConnectionMultiplexer.Connect("localhost");
-        _db = _redis.GetDatabase();
+    public PersistenceService(IComponentStrategy componentStrategy) 
+        => _componentStrategy = componentStrategy;
 
-        _componentStrategy = componentStrategy;
-    }
-    
     public override async Task<StoreReply> StoreValue(StoreRequest request, ServerCallContext context)
     {
         var config = await ConfigLoader.LoadFromFile(request.StoreName);
-        
-        
-        
-        
-        
-        var success = await _db.StringSetAsync(request.Key, request.Data);
+        var success = await _componentStrategy.ExecuteStrategyForComponent(config, new StoreStrategy
+        {
+            Key = request.Key,
+            Data = request.Data
+        });
         return new StoreReply { Success = success };
     }
 
     public override async Task<RetrieveReply> RetrieveValue(RetrieveRequest request, ServerCallContext context)
     {
         var config = await ConfigLoader.LoadFromFile(request.StoreName);
-        var loader = await _componentStrategy.ExecuteStrategyForComponent<string>(config, new RetrieveStrategy
+        var loader = await _componentStrategy.ExecuteStrategyForComponent(config, new RetrieveStrategy
         {
             Key = request.Key
         });
-        
-        
-        
-        
-        var value = await _db.StringGetAsync(request.Key);
-        return new RetrieveReply { Success = true, Data = value };
+        return new RetrieveReply { Success = true, Data = loader };
     }
 }

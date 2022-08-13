@@ -1,6 +1,5 @@
 ﻿using Grpc.Core;
 using System.Text.Json;
-using Grpc.Net.Client;
 
 namespace SideCar.Client;
 
@@ -14,13 +13,13 @@ internal class StorageClient : IStorageClient
 {
     private readonly Persistence.PersistenceClient _client;
 
-    public StorageClient(GrpcChannel channel)
+    public StorageClient(ChannelBase channel)
     {
         _client = new Persistence.PersistenceClient(channel);
     }
 
-    public async Task<StoreReply> StoreAsync<T>(string storeName, string key, T value) 
-        => await _client.StoreValueAsync(new StoreRequest {StoreName = storeName, Key = key, Data = JsonSerializer.Serialize(value)});
+    public async Task<StoreReply> StoreAsync<T>(string storeName, string key, T value) =>
+        await _client.StoreValueAsync(new StoreRequest { StoreName = storeName, Key = key, Data = JsonSerializer.Serialize(value) });
 
     public async Task<T> RetrieveAsync<T>(string storeName, string key)
     {

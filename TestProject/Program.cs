@@ -1,9 +1,11 @@
 using SideCar.Client;
+using SideCar.Redis;
 using SideCar.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSideCar().AddSideCarClient();
+builder.Services.AddSideCar(x => { x.AddRedis(); })
+    .AddSideCarClient();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

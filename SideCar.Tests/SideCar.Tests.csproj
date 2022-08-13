@@ -29,6 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\SideCar.Redis\SideCar.Redis.csproj" />
       <ProjectReference Include="..\SideCar\SideCar.csproj" />
     </ItemGroup>
 

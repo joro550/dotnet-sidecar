@@ -1,4 +1,4 @@
-﻿using Grpc.Net.Client;
+﻿using Grpc.Core;
 
 namespace SideCar.Client;
 
@@ -9,9 +9,9 @@ public interface ISideCarClient
 
 internal class SideCarClient : ISideCarClient
 {
-    private readonly GrpcChannel _channel;
+    private readonly ChannelBase _channel;
 
-    public SideCarClient(GrpcChannel channel) => _channel = channel;
+    public SideCarClient(ChannelBase channel) => _channel = channel;
 
     public async Task<HelloReply> GetReply(string name)
     {
